@@ -1,8 +1,14 @@
 package cat.iesesteveterradas.fites;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+
 import cat.iesesteveterradas.fites.objectes.Exercici3nau;
 
 /**
@@ -51,17 +57,46 @@ public class Exercici3 {
     // Mètode per serialitzar la llista a un fitxer
     public void serialitzaLlista(String filePath, ArrayList<Exercici3nau> llista) {
         // *************** CODI EXERCICI FITA **********************/
+        String camiFitxer = filePath;
+
+        try (FileOutputStream fos = new FileOutputStream(camiFitxer);
+             ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+
+            oos.writeObject(llista);
+            System.out.println("Objecte serialitzat correctament a " + camiFitxer);
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Fitxer no trobat: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Error entrada/sortida: " + e.getMessage());
+        }
     }
 
     // Mètode per deserialitzar la llista del fitxer
     public ArrayList<Exercici3nau> deserialitzaLlista(String filePath) {
         // *************** CODI EXERCICI FITA **********************/
-        return null; // A substituir 
+         String camiFitxer = filePath;  
+        
+        try (FileInputStream fis = new FileInputStream(camiFitxer);
+            ObjectInputStream ois = new ObjectInputStream(fis)) {
+
+            return (ArrayList<Exercici3nau>) ois.readObject();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Error en deserialitzar l'objecte HashMap - Fitxer no trobat: " + e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Error en deserialitzar l'objecte HashMap - Error entrada/sortida: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error en deserialitzar l'objecte HashMap - No s'ha trobat la classe: " + e.getMessage());
+        }
+        return null;
     }
 
     // Mètode per imprimir la llista
     public void imprimeixLlista(ArrayList<Exercici3nau> llista) {
         // *************** CODI EXERCICI FITA **********************/
+
+        llista.forEach(Exercici3nau -> System.out.println(Exercici3nau));
     }
 
     /****************************************************************************/

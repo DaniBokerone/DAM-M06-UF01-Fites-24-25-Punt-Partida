@@ -1,12 +1,12 @@
 package cat.iesesteveterradas.fites;
 
-import cat.iesesteveterradas.fites.objectes.*;
-
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import cat.iesesteveterradas.fites.objectes.Exercici2Persona;
 
 /**
  * Implementa codi que compleixi el següent:
@@ -37,14 +37,38 @@ public class Exercici2Llegeix {
     }
 
     // Mètode que llegeix el fitxer i retorna una llista de persones
-    public List<Exercici2Persona> llegeixFitxer(String filePath) {
-        // *************** CODI EXERCICI FITA **********************/
-        return null; // A substituir 
+    public List<Exercici2Persona> llegeixFitxer(String filePath)  {
+        // *************** CODI EXERCICI FITA **********************/        
+        String camiFitxer = filePath;
+
+        List<Exercici2Persona> persones = new ArrayList<>();
+        
+        try (FileInputStream fis = new FileInputStream(camiFitxer);
+             DataInputStream dis = new DataInputStream(fis)) {
+
+            // Leer los datos hasta el final del archivo
+            while (dis.available() > 0) { 
+                String nom = dis.readUTF();  
+                String cognom = dis.readUTF(); 
+                int any = dis.readInt(); 
+                  
+                Exercici2Persona personaAdd = new Exercici2Persona(nom,cognom,any);
+                persones.add(personaAdd);
+            }
+
+            return persones;
+        } catch (IOException e) {
+            System.out.println("Error en llegir les persones del fitxer: " + camiFitxer+" |" );
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
     // Mètode que imprimeix les dades de la llista de persones
     public void imprimeixPersones(List<Exercici2Persona> persones) {
         // *************** CODI EXERCICI FITA **********************/
+        persones.forEach(Exercici2Persona -> System.out.println(Exercici2Persona.getNom()+" "+Exercici2Persona.getCognom()+", "+Exercici2Persona.getAnyNaixement()));
+
     }
 
     /****************************************************************************/

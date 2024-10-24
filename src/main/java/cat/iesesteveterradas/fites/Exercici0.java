@@ -33,7 +33,10 @@ public class Exercici0 {
 
     // Mètode que conté la lògica principal
     public void executa() {
-        boolean existeix = comprovaExistenciaFitxer();
+        boolean existeix;
+
+        existeix = comprovaExistenciaFitxer();
+    
         System.out.println("El fitxer existeix: " + existeix);
 
         if (existeix) {
@@ -62,31 +65,60 @@ public class Exercici0 {
     // Mètode per comprovar l'existència del fitxer
     public Boolean comprovaExistenciaFitxer() {
         // *************** CODI EXERCICI FITA **********************/
-        return null; // A substituir  
+        File fitxer = new File(this.filePath);
+
+        if (fitxer.exists() && fitxer.isFile()) {
+            return true;  // Arxiu existeix
+        }
+        return false;
     }
 
     // Mètode per determinar si el fitxer és ocult
     public Boolean determinaSiEsOcult() {
         // *************** CODI EXERCICI FITA **********************/
-        return null; // A substituir 
+        File fitxer = new File(this.filePath);
+
+        return fitxer.isHidden(); 
     }
 
     // Mètode per obtenir la data de l'última modificació
     public Date obtenirDataUltimaModificacio() {
         // *************** CODI EXERCICI FITA **********************/
-        return null; // A substituir  
+        File fitxer = new File(this.filePath);
+
+        long lastModified = fitxer.lastModified();
+        Date date = new Date(lastModified);
+
+        return date; // A substituir  
     }
 
     // Mètode per verificar si el fitxer es pot modificar
     public Boolean verificarEsPotModificar() {
         // *************** CODI EXERCICI FITA **********************/
-        return null; // A substituir 
+        File fitxer = new File(this.filePath);
+
+        return fitxer.canWrite(); // A substituir 
     }
 
     // Mètode per llistar els fitxers del directori base
     public ArrayList<String> llistarArxiusDirectori() {
         // *************** CODI EXERCICI FITA **********************/
-        return null; // A substituir 
+
+        File directori = new File(this.filePath);
+        String  parentDirectoryName = directori.getParent();
+        File parentDirectory = new File(parentDirectoryName);
+
+        ArrayList<String> fitxersDirectori = new ArrayList<>();
+
+        String[] arxius = parentDirectory.list();
+        if (arxius != null && arxius.length > 0) {
+            for (String arxiu : arxius) {
+
+                fitxersDirectori.add(arxiu);
+            }
+        }
+
+        return  fitxersDirectori;
     }
 
     /****************************************************************************/
